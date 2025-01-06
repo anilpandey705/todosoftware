@@ -31,6 +31,9 @@
             <button class="btn btn-primary" id="addTaskBtn">Add Task</button>
         </div>
         <ul class="list-group" id="taskList"></ul>
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-danger" id="deleteAllBtn">Delete All Tasks</button>
+        </div>
     </div>
 
     <script>
@@ -38,6 +41,7 @@
             const taskInput = document.getElementById('taskInput');
             const addTaskBtn = document.getElementById('addTaskBtn');
             const taskList = document.getElementById('taskList');
+            const deleteAllBtn = document.getElementById('deleteAllBtn');
 
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
@@ -115,6 +119,14 @@
                 renderTasks();
             };
 
+            const deleteAllTasks = () => {
+                if (confirm('Are you sure you want to delete all tasks?')) {
+                    tasks = [];
+                    saveTasks();
+                    renderTasks();
+                }
+            };
+
             addTaskBtn.addEventListener('click', addTask);
 
             taskInput.addEventListener('keypress', (e) => {
@@ -122,6 +134,8 @@
                     addTask();
                 }
             });
+
+            deleteAllBtn.addEventListener('click', deleteAllTasks);
 
             renderTasks();
         });
